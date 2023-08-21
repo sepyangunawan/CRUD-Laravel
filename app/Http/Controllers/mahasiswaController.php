@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\mahasiswa;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
-use Symfony\Contracts\Service\Attribute\Required;
 
 class mahasiswaController extends Controller
 {
@@ -16,7 +15,7 @@ class mahasiswaController extends Controller
     public function index(Request $request)
     {
         $katakunci = $request->katakunci;
-        $jumlahbaris = 4;
+        $jumlahbaris = 3;
         if(strlen($katakunci)){
             $data = mahasiswa::where('nim','like',"%$katakunci%")
                 ->orWhere('nama','like',"%$katakunci%")
@@ -28,19 +27,11 @@ class mahasiswaController extends Controller
         return view('mahasiswa.index')->with('data', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     * 
-     * 
-     */
     public function create()
     {
         return view('mahasiswa.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         Session::flash('nim', $request->nim);
@@ -66,27 +57,18 @@ class mahasiswaController extends Controller
         mahasiswa::create($data);
         return redirect()->to('mahasiswa')->with('success','Berhasil menambahkan data');
     }
-
-    /**
-     * Display the specified resource.
-     */
+   
     public function show(string $id)
     {
-        //
+        $data = mahasiswa::where('nim', $id)->firstOrFail();
+        return view('mahasiswa.show', compact('data'));
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $data = mahasiswa::where('nim',$id)->first();
         return view('mahasiswa.edit')->with('data',$data);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -104,9 +86,6 @@ class mahasiswaController extends Controller
         return redirect()->to('mahasiswa')->with('success','Berhasil melakukan update data');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         mahasiswa::where('nim', $id)->delete();

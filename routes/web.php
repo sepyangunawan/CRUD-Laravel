@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\mahasiswacontroller;
+use App\Http\Controllers\mahasiswaController;
 use Illuminate\Support\Facades\Route;
 
 /*

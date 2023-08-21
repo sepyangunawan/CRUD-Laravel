@@ -34,12 +34,19 @@
                 <td>{{ $item->nama }}</td>
                 <td>{{ $item->jurusan }}</td>
                 <td>
-                    <a href='{{ url('mahasiswa/'.$item->nim.'/edit') }}' class="btn btn-warning btn-sm">Edit</a>
-                    <form class='d-inline' action="{{ url('mahasiswa/'.$item->nim) }}" method="post">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div>
+                            <a href="{{ route('mahasiswa.show', $item->nim) }}" class="btn btn-secondary btn-sm">Detail</a>
+                        </div>
+                        <div>
+                            <a href="{{ url('mahasiswa/'.$item->nim.'/edit') }}" class="btn btn-warning btn-sm">Edit</a>
+                        </div>
+                        <form class='d-inline' action="{{ url('mahasiswa/'.$item->nim) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" name="submit" class="btn btn-danger btn-sm">Del</a>
-                    </form>
+                            <button type="submit" name="submit" class="btn btn-danger btn-sm">Del</a>
+                        </form>
+                    </div>
                 </td>
             </tr>
             <?php $i++ ?>  
